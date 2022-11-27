@@ -7,29 +7,38 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 public class PaginaInicialController implements Initializable {
 
     @FXML
     private TilePane panel;
+    public static Videojuego ultimoVideojuegoElegido;
+    @FXML
+    private RadioButton botonTitulo;
+    @FXML
+    private RadioButton botonFecha;
+    LCDE<Videojuego> videojuegos;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        LCDE<Videojuego> videojuegos = LectorCsvCatalogo.cargarListaVideojuegos();
-        for(Videojuego v : videojuegos){
-            System.out.println(v.getPortada());
-        }
+        this.videojuegos = LectorCsvCatalogo.cargarListaVideojuegos();
         mostrarVideojuegos(videojuegos);
-        
+        setActions();
     }    
     
     private void mostrarVideojuegos(LCDE<Videojuego> videojuegos){
@@ -51,59 +60,77 @@ public class PaginaInicialController implements Initializable {
             vbox.getChildren().add(imageView);
 
             Label titleLabel = new Label(videojuego.getTitulo());
+            titleLabel.setPadding(new Insets(8, 0, 0, 0));
+            titleLabel.setTextFill(Color.web("#F5F5F5"));
+            titleLabel.setFont(Font.font("SansSerif", 13));
             titleLabel.setMaxWidth(150);
             vbox.getChildren().add(titleLabel);
-        }catch(IOException e){
+        
+            imageView.setOnMouseClicked(event -> {
+                try {
+                    ultimoVideojuegoElegido = videojuego;
+                    App.setRoot("infoVideojuego");
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            });
+            
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        
-
-        /*Label yearLabel = new Label("" + book.getYear());
-        yearLabel.setTextFill(Color.web("#0000FF"));
-        yearLabel.setStyle("-fx-font-weight: bold");
-        vbox.getChildren().add(yearLabel);
-
-        yearLabel.setOnMouseClicked(event -> {
-            currentYear = yearLabel.getText();
-            showBooksOfYear(yearLabel.getText());
-        });*/
 
         return vbox;
     }
     
-     /*private void displayBooks(List<Book> books) {
-        booksDisplayed = books;
-        updateBookCont();
-        for (Book book : books) {
-            Pane bookView = createBookView(book);
-            gallery.getChildren().addAll(bookView);
-        }
-    }
-
-    private Pane createBookView(Book book) {
-        System.out.println("Adding: " + book.getTitle());
-
-        VBox vbox = new VBox();
-        final Image image = new Image("file:./covers/" + book.getISBN() + ".jpg", 150, 0, true, false);
-        ImageView imageView = new ImageView(image);
-        imageView.setFitWidth(150);
-
-        vbox.getChildren().add(imageView);
-
-        Label titleLabel = new Label(book.getTitle());
-        titleLabel.setMaxWidth(150);
-        vbox.getChildren().add(titleLabel);
-
-        Label yearLabel = new Label("" + book.getYear());
-        yearLabel.setTextFill(Color.web("#0000FF"));
-        yearLabel.setStyle("-fx-font-weight: bold");
-        vbox.getChildren().add(yearLabel);
-
-        yearLabel.setOnMouseClicked(event -> {
-            currentYear = yearLabel.getText();
-            showBooksOfYear(yearLabel.getText());
+    private void setActions() {
+        botonTitulo.setOnAction(eh->{
+            condicion();
         });
-
-        return vbox;
-    }*/
+        botonFecha.setOnAction(eh->{
+            condicion();
+        });
+    }
+    
+    private void condicion(){
+        if(botonTitulo.isSelected() && botonFecha.isSelected()){
+                
+            }else if(botonTitulo.isSelected()){
+                ordenarPorTitulo();
+            }else if(botonFecha.isSelected()){
+                
+            }
+    }
+    
+    private void ordenarPorTitulo(){
+        LCDE<Videojuego> tmp = new LCDE<>();
+        PriorityQueue<Videojuego> colaVideojuegos = new PriorityQueue<>((v1,v2)->{
+            return v1.getTitulo().compareTo(v2.getTitulo());
+        });
+        for(Videojuego v : this.videojuegos){
+            colaVideojuegos.offer(v);
+        }
+        while(!colaVideojuegos.isEmpty()){
+            tmp.addLast(colaVideojuegos.remove());
+        }
+        panel.getChildren().clear();
+        this.videojuegos = tmp;
+        mostrarVideojuegos(this.videojuegos);
+    }
+    
+    private void ordenarPorfecha(){
+        LCDE<Videojuego> tmp = new LCDE<>();
+        PriorityQueue<Videojuego> colaVideojuegos = new PriorityQueue<>((v1,v2)->{
+            return v1.getTitulo().compareTo(v2.getTitulo());
+        });
+        for(Videojuego v : this.videojuegos){
+            colaVideojuegos.offer(v);
+        }
+        while(!colaVideojuegos.isEmpty()){
+            tmp.addLast(colaVideojuegos.remove());
+        }
+        panel.getChildren().clear();
+        this.videojuegos = tmp;
+        mostrarVideojuegos(this.videojuegos);
+    }
+    
 }
