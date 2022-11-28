@@ -104,9 +104,10 @@ public class PaginaInicialController implements Initializable {
     private void condicion(){
         if(botonTitulo.isSelected() && botonFecha.isSelected()){
                 
-        }else if(botonTitulo.isSelected()){
+        }if(botonTitulo.isSelected()){
                 ordenarPorTitulo();
-        }else if(botonFecha.isSelected()){
+        }if(botonFecha.isSelected()){
+                ordenarPorfecha();
                 
         }else{
             panel.getChildren().clear();
@@ -132,14 +133,14 @@ public class PaginaInicialController implements Initializable {
     
     private void ordenarPorfecha(){
         LCDE<Videojuego> tmp = new LCDE<>();
-        PriorityQueue<Videojuego> colaVideojuegos = new PriorityQueue<>((v1,v2)->{
-            return v1.getTitulo().compareTo(v2.getTitulo());
+        PriorityQueue<Videojuego> colaVideojuego = new PriorityQueue<>((v1,v2)->{
+            return v1.getFechaDeLanzamiento().compareTo(v2.getFechaDeLanzamiento());
         });
         for(Videojuego v : this.videojuegos){
-            colaVideojuegos.offer(v);
+            colaVideojuego.offer(v);
         }
-        while(!colaVideojuegos.isEmpty()){
-            tmp.addLast(colaVideojuegos.remove());
+        while(!colaVideojuego.isEmpty()){
+            tmp.addLast(colaVideojuego.remove());
         }
         panel.getChildren().clear();
         this.videojuegos = tmp;
