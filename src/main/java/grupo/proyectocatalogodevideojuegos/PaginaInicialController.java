@@ -7,16 +7,20 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
@@ -32,11 +36,20 @@ public class PaginaInicialController implements Initializable {
     private RadioButton botonTitulo;
     @FXML
     private RadioButton botonFecha;
+    @FXML
+    private TextField buscarTitulo;
+    @FXML
+    private Button btnBuscar;
     LCDE<Videojuego> videojuegos;
+    LCDE<Videojuego> listaInicialVideojuegos;
+
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        buscarTitulo.setStyle("-fx-background-radius: 50px");
         this.videojuegos = LectorCsvCatalogo.cargarListaVideojuegos();
+        this.listaInicialVideojuegos = LectorCsvCatalogo.cargarListaVideojuegos();
         mostrarVideojuegos(videojuegos);
         setActions();
     }    
@@ -83,22 +96,22 @@ public class PaginaInicialController implements Initializable {
     }
     
     private void setActions() {
-        botonTitulo.setOnAction(eh->{
-            condicion();
-        });
-        botonFecha.setOnAction(eh->{
-            condicion();
-        });
+        botonTitulo.setOnAction(eh -> condicion());
+        botonFecha.setOnAction(eh -> condicion());
+        btnBuscar.setOnAction(eh-> ordenarPorBusqueda());
     }
     
     private void condicion(){
         if(botonTitulo.isSelected() && botonFecha.isSelected()){
                 
-            }else if(botonTitulo.isSelected()){
+        }else if(botonTitulo.isSelected()){
                 ordenarPorTitulo();
-            }else if(botonFecha.isSelected()){
+        }else if(botonFecha.isSelected()){
                 
-            }
+        }else{
+            panel.getChildren().clear();
+            mostrarVideojuegos(this.listaInicialVideojuegos);
+        }
     }
     
     private void ordenarPorTitulo(){
@@ -124,6 +137,25 @@ public class PaginaInicialController implements Initializable {
         });
         for(Videojuego v : this.videojuegos){
             colaVideojuegos.offer(v);
+        }
+        while(!colaVideojuegos.isEmpty()){
+            tmp.addLast(colaVideojuegos.remove());
+        }
+        panel.getChildren().clear();
+        this.videojuegos = tmp;
+        mostrarVideojuegos(this.videojuegos);
+    }
+    
+    private void ordenarPorBusqueda(){
+        String palabra = buscarTitulo.getText();
+        LCDE<Videojuego> tmp = new LCDE<>();
+        Queue<Videojuego> colaVideojuegos = new LinkedList<>();
+        for(Videojuego v : this.videojuegos){
+            String tituloNormalizado = v.getTitulo().toLowerCase();
+            String palabraNormalizada = palabra.toLowerCase();
+            if(tituloNormalizado.contains(palabraNormalizada)){
+                colaVideojuegos.offer(v);
+            }
         }
         while(!colaVideojuegos.isEmpty()){
             tmp.addLast(colaVideojuegos.remove());

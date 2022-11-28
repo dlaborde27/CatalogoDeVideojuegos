@@ -15,7 +15,7 @@ public class LectorCsvCatalogo {
             while ((linea = br.readLine())!=null){
                 String[] datos = linea.split("/");
                 String capturas= datos[6];
-                String[] arregloCapturas = capturas.substring(1,capturas.length()).split(",");
+                String[] arregloCapturas = capturas.substring(1,capturas.length()-1).split(",");
                 videojuegos.addLast(new Videojuego(datos[0],datos[1],datos[2],datos[3],datos[4],datos[5],agregarALista(arregloCapturas)));
             }
         }catch (IOException e){

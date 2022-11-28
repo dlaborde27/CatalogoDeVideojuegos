@@ -17,8 +17,12 @@
          <children>
             <HBox prefHeight="37.0" prefWidth="626.0">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="21.0" prefWidth="26.0" />
-                  <TextField prefHeight="26.0" prefWidth="200.0" style="-fx-background-color: #F5F5F599;" />
+                  <Button fx:id="btnBuscar" mnemonicParsing="false" prefHeight="21.0" prefWidth="26.0" />
+                  <TextField fx:id="buscarTitulo" prefHeight="26.0" prefWidth="200.0" promptText="Buscar en el catalogo" style="-fx-background-color: #F5F5F599;">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </TextField>
                </children>
                <VBox.margin>
                   <Insets top="10.0" />
