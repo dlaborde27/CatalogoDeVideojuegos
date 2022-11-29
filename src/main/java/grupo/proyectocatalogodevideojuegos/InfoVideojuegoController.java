@@ -53,8 +53,9 @@ public class InfoVideojuegoController implements Initializable {
             titulo.setText(videojuego.getTitulo());
             descripcion.setText(videojuego.getDescripcion());
             genero.setText(videojuego.getGeneros());
-            portada.setImage(new Image(new FileInputStream("src\\main\\resources\\grupo\\ListaVideojuegos\\imagenes\\Portada\\" + videojuego.getPortada()), 300, 0, true, false));
-            portada.setFitWidth(300);
+            portada.setImage(new Image(new FileInputStream("src\\main\\resources\\grupo\\ListaVideojuegos\\imagenes\\Portada\\" + videojuego.getPortada()), 1280, 720, true, false));
+            portada.setFitWidth(200);
+            portada.setFitHeight(300);
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         }
@@ -80,8 +81,10 @@ public class InfoVideojuegoController implements Initializable {
 
     private VBox crearElementosVideojuego(String c) {
         VBox vbox = new VBox();
+  
+ 
         try {
-            Image image = new Image(new FileInputStream("src\\main\\resources\\grupo\\ListaVideojuegos\\imagenes\\Screenshot\\" + c), 150, 0, true, false);
+            Image image = new Image(new FileInputStream("src\\main\\resources\\grupo\\ListaVideojuegos\\imagenes\\Screenshot\\" + c), 1920, 1080, true, false);
             ImageView imageView = new ImageView(image);
             imageView.setFitWidth(300);
             imageView.setFitHeight(200);
