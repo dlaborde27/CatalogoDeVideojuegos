@@ -104,9 +104,9 @@ public class PaginaInicialController implements Initializable {
     private void condicion(){
         if(botonTitulo.isSelected() && botonFecha.isSelected()){
                 
-        }if(botonTitulo.isSelected()){
+        }else if(botonTitulo.isSelected()){
                 ordenarPorTitulo();
-        }if(botonFecha.isSelected()){
+        }else if(botonFecha.isSelected()){
                 ordenarPorfecha();
                 
         }else{
