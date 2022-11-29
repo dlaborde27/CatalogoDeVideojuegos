@@ -9,7 +9,8 @@ public class Videojuego {
     private String fechaDeLanzamiento;
     private String portada;
     private LCDE<String> capturasDePantalla;
-    //private LCDE<Reseña> reseñas;
+    private LCDE<Reseña> reviews; 
+
 
     public Videojuego(String titulo, String descripcion, String genero, String desarrolladora, String fechaDeLanzamiento, String portada, LCDE<String> capturasDePantalla) {
         this.titulo = titulo;
@@ -52,6 +53,8 @@ public class Videojuego {
     public String toString(){
         return titulo;
     }
-    
+    public  void addReviews(Reseña r){
+        reviews.addFirst(r);
+    }
     
 }

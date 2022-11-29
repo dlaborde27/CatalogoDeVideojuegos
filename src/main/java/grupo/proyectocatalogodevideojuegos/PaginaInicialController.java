@@ -66,9 +66,11 @@ public class PaginaInicialController implements Initializable {
 
         VBox vbox = new VBox();
         try{
-            Image image = new Image(new FileInputStream("src\\main\\resources\\grupo\\ListaVideojuegos\\imagenes\\Portada\\" + videojuego.getPortada()), 150, 0, true, false);
+            Image image = new Image(new FileInputStream("src\\main\\resources\\grupo\\ListaVideojuegos\\imagenes\\Portada\\" + videojuego.getPortada()), 1280, 720, true, false);
             ImageView imageView = new ImageView(image);
-            imageView.setFitWidth(150);
+            imageView.setFitWidth(200);
+            imageView.setFitHeight(300);
+
 
             vbox.getChildren().add(imageView);
 
