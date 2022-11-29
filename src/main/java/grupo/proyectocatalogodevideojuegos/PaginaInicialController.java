@@ -13,6 +13,7 @@ import java.util.Queue;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Dimension2D;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -20,12 +21,16 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
+
+
+import static javafx.scene.paint.Color.*;
+import static javafx.scene.paint.Color.LIGHTBLUE;
+
 
 public class PaginaInicialController implements Initializable {
 
@@ -43,8 +48,8 @@ public class PaginaInicialController implements Initializable {
     LCDE<Videojuego> videojuegos;
     LCDE<Videojuego> listaInicialVideojuegos;
 
-    
-    
+
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         buscarTitulo.setStyle("-fx-background-radius: 50px");
@@ -74,7 +79,7 @@ public class PaginaInicialController implements Initializable {
 
             Label titleLabel = new Label(videojuego.getTitulo());
             titleLabel.setPadding(new Insets(8, 0, 0, 0));
-            titleLabel.setTextFill(Color.web("#F5F5F5"));
+            titleLabel.setTextFill(web("#F5F5F5"));
             titleLabel.setFont(Font.font("SansSerif", 13));
             titleLabel.setMaxWidth(150);
             vbox.getChildren().add(titleLabel);
@@ -155,7 +160,7 @@ public class PaginaInicialController implements Initializable {
         Queue<Videojuego> colaVideojuegos = new LinkedList<>();
         for(Videojuego v : this.videojuegos){
             String tituloNormalizado = v.getTitulo().toLowerCase();
-           /* String palabraNormalizada = palabra.toLowerCase();
+           /* String palabraNormalizada = palabra.toLowerCase();  //Codigo hecho por dario
             if(tituloNormalizado.contains(palabraNormalizada)){
                 colaVideojuegos.offer(v);
             }*/
@@ -171,7 +176,19 @@ public class PaginaInicialController implements Initializable {
         while(!colaVideojuegos.isEmpty()){
             tmp.addLast(colaVideojuegos.remove());
         }
+        Button botonAtras= new Button("Back");
+        botonAtras.setPrefSize(100,25);
+        botonAtras.setPadding(new Insets(10,0,0,10));
+        botonAtras.setTextAlignment(TextAlignment.CENTER);
+        botonAtras.setOnMouseClicked(event -> {
+            try {
+                App.setRoot("paginaInicial");
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
         panel.getChildren().clear();
+        panel.getChildren().addAll(botonAtras);
         this.videojuegos = tmp;
         mostrarVideojuegos(this.videojuegos);
     }
