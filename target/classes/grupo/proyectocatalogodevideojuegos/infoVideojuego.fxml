@@ -10,24 +10,16 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="448.0" prefWidth="583.0" style="-fx-background-color: #121212;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grupo.proyectocatalogodevideojuegos.InfoVideojuegoController">
+<ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="678.0" prefWidth="749.0" style="-fx-background-color: #121212;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grupo.proyectocatalogodevideojuegos.InfoVideojuegoController">
    <opaqueInsets>
       <Insets />
    </opaqueInsets>
    <content>
-      <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #121212;">
+      <VBox prefHeight="412.0" prefWidth="670.0" style="-fx-background-color: #121212;">
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="titulo" text="Label" textFill="WHITE">
-                     <font>
-                        <Font name="SansSerif Bold" size="32.0" />
-                     </font>
-                     <padding>
-                        <Insets bottom="10.0" />
-                     </padding>
-                  </Label>
-                  <Button fx:id="atras" alignment="CENTER" mnemonicParsing="false" prefHeight="38.0" prefWidth="52.0" text="n">
+                  <Button fx:id="atras" alignment="CENTER" mnemonicParsing="false" prefHeight="38.0" prefWidth="52.0" style="-fx-background-color: #ADD8E6;" text="Back">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -35,6 +27,14 @@
                         <Insets />
                      </opaqueInsets>
                   </Button>
+                  <Label fx:id="titulo" text="Label" textFill="WHITE">
+                     <font>
+                        <Font name="SansSerif Bold" size="32.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="10.0" left="50.0" />
+                     </padding>
+                  </Label>
                </children>
                <VBox.margin>
                   <Insets bottom="10.0" />
@@ -42,7 +42,7 @@
             </HBox>
             <HBox alignment="CENTER">
                <children>
-                  <ImageView fx:id="portada" fitHeight="341.0" fitWidth="406.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="portada" fitHeight="277.0" fitWidth="344.0" pickOnBounds="true" preserveRatio="true">
                      <HBox.margin>
                         <Insets right="25.0" />
                      </HBox.margin>
@@ -57,7 +57,7 @@
                               <Insets bottom="10.0" />
                            </VBox.margin>
                         </Label>
-                        <ScrollPane fx:id="capturas" style="-fx-background-color: #121212;" vbarPolicy="NEVER">
+                        <ScrollPane fx:id="capturas" prefHeight="276.0" prefWidth="194.0" style="-fx-background-color: #121212;" vbarPolicy="NEVER">
                            <content>
                               <TilePane fx:id="panelCapturas" style="-fx-background-color: #121212;" />
                            </content>

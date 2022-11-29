@@ -12,7 +12,7 @@
             <HBox prefHeight="37.0" prefWidth="626.0">
                <children>
                   <Button fx:id="btnBuscar" mnemonicParsing="false" prefHeight="23.0" prefWidth="60.0" style="-fx-background-color: #ADD8E6;" text="Search" />
-                  <TextField fx:id="buscarTitulo" onAction="#initialize" prefHeight="26.0" prefWidth="200.0" promptText="Buscar en el catalogo" style="-fx-background-color: #F5F5F599;">
+                  <TextField fx:id="buscarTitulo" prefHeight="26.0" prefWidth="200.0" promptText="Buscar en el catalogo" style="-fx-background-color: #F5F5F599;">
                      <font>
                         <Font size="11.0" />
                      </font>
@@ -38,7 +38,7 @@
                         <Font name="SansSerif Regular" size="13.0" />
                      </font>
                   </Label>
-                  <RadioButton fx:id="botonTitulo" mnemonicParsing="false" onAction="#initialize" text="Título" textFill="WHITE">
+                  <RadioButton fx:id="botonTitulo" mnemonicParsing="false" text="Título" textFill="WHITE">
                      <padding>
                         <Insets right="25.0" />
                      </padding>
@@ -46,7 +46,7 @@
                         <Font name="SansSerif Regular" size="13.0" />
                      </font>
                   </RadioButton>
-                  <RadioButton fx:id="botonFecha" mnemonicParsing="false" onAction="#initialize" text="Fecha de lanzamiento" textFill="WHITE">
+                  <RadioButton fx:id="botonFecha" mnemonicParsing="false" text="Fecha de lanzamiento" textFill="WHITE">
                      <font>
                         <Font name="SansSerif Regular" size="13.0" />
                      </font></RadioButton>

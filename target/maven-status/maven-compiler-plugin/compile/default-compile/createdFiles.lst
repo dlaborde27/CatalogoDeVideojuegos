@@ -3,7 +3,6 @@ grupo\modelo\LCDE.class
 module-info.class
 grupo\proyectocatalogodevideojuegos\PaginaInicialController.class
 grupo\modelo\LCDE$Node.class
-grupo\modelo\Reseña.class
 grupo\modelo\LCDE$CustomIterator.class
 grupo\modelo\Videojuego.class
 grupo\proyectocatalogodevideojuegos\App.class
