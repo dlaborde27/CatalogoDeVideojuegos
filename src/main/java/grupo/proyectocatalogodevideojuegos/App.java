@@ -4,8 +4,10 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 
 /**
@@ -19,6 +21,7 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("paginaInicial"), 1050, 600);
         stage.setScene(scene);
+        stage.getIcons().add(new Image(new FileInputStream("src\\main\\resources\\grupo\\ListaVideojuegos\\LASAGA.jpg"),150, 0, true, false));
         stage.setTitle("Catalogo de videojuegos");
         stage.show();
     }

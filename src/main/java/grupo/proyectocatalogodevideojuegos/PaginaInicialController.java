@@ -103,6 +103,8 @@ public class PaginaInicialController implements Initializable {
     
     private void condicion(){
         if(botonTitulo.isSelected() && botonFecha.isSelected()){
+            ordenarPorTitulo();
+            ordenarPorfecha();
                 
         }else if(botonTitulo.isSelected()){
                 ordenarPorTitulo();
@@ -153,9 +155,17 @@ public class PaginaInicialController implements Initializable {
         Queue<Videojuego> colaVideojuegos = new LinkedList<>();
         for(Videojuego v : this.videojuegos){
             String tituloNormalizado = v.getTitulo().toLowerCase();
-            String palabraNormalizada = palabra.toLowerCase();
+           /* String palabraNormalizada = palabra.toLowerCase();
             if(tituloNormalizado.contains(palabraNormalizada)){
                 colaVideojuegos.offer(v);
+            }*/
+            String[] juegoSeparado=v.getTitulo().toLowerCase().split(" ");
+            String palabraNormalizada1=palabra.toLowerCase();
+            for(String juegoSeparado1: juegoSeparado){
+                if(juegoSeparado1.startsWith(palabraNormalizada1) && tituloNormalizado.contains(juegoSeparado1)){
+                    colaVideojuegos.offer(v);}
+
+
             }
         }
         while(!colaVideojuegos.isEmpty()){
