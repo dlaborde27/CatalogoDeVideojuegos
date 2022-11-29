@@ -7,10 +7,13 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.TreeSet;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -20,6 +23,8 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
@@ -42,6 +47,12 @@ public class PaginaInicialController implements Initializable {
     private Button btnBuscar;
     LCDE<Videojuego> videojuegos;
     LCDE<Videojuego> listaInicialVideojuegos;
+    @FXML
+    private TextField txtAño;
+    @FXML
+    private Button mostrarTodo;
+    @FXML
+    private VBox scenapr;
 
     
     
@@ -50,6 +61,9 @@ public class PaginaInicialController implements Initializable {
         buscarTitulo.setStyle("-fx-background-radius: 50px");
         this.videojuegos = LectorCsvCatalogo.cargarListaVideojuegos();
         this.listaInicialVideojuegos = LectorCsvCatalogo.cargarListaVideojuegos();
+        for(Videojuego v:videojuegos){
+            System.out.println(v.getTitulo() + "    "+ v.getFechaDeLanzamiento());
+        }
         mostrarVideojuegos(videojuegos);
         setActions();
     }    
@@ -62,25 +76,30 @@ public class PaginaInicialController implements Initializable {
     }
     
     private VBox crearElementosVideojuego(Videojuego videojuego){
-        System.out.println("Adding: " + videojuego.getTitulo());
-
+        //System.out.println("Adding: " + videojuego.getTitulo()+"    "+ videojuego.getFechaDeLanzamiento());
         VBox vbox = new VBox();
         try{
             Image image = new Image(new FileInputStream("src\\main\\resources\\grupo\\ListaVideojuegos\\imagenes\\Portada\\" + videojuego.getPortada()), 1280, 720, true, false);
             ImageView imageView = new ImageView(image);
             imageView.setFitWidth(200);
             imageView.setFitHeight(300);
-
-
             vbox.getChildren().add(imageView);
-
             Label titleLabel = new Label(videojuego.getTitulo());
             titleLabel.setPadding(new Insets(8, 0, 0, 0));
             titleLabel.setTextFill(Color.web("#F5F5F5"));
             titleLabel.setFont(Font.font("SansSerif", 13));
             titleLabel.setMaxWidth(150);
             vbox.getChildren().add(titleLabel);
-        
+            
+            
+            Label fecha = new Label(videojuego.getFechaDeLanzamiento());
+            fecha.setPadding(new Insets(8, 0, 0, 0));
+            fecha.setTextFill(Color.web("#F5F5F5"));
+            fecha.setFont(Font.font("SansSerif", 13));
+            fecha.setMaxWidth(150);
+            vbox.getChildren().add(fecha);
+            
+            
             imageView.setOnMouseClicked(event -> {
                 try {
                     ultimoVideojuegoElegido = videojuego;
@@ -89,11 +108,9 @@ public class PaginaInicialController implements Initializable {
                     ex.printStackTrace();
                 }
             });
-            
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return vbox;
     }
     
@@ -101,6 +118,15 @@ public class PaginaInicialController implements Initializable {
         botonTitulo.setOnAction(eh -> condicion());
         botonFecha.setOnAction(eh -> condicion());
         btnBuscar.setOnAction(eh-> ordenarPorBusqueda());
+        scenapr.setOnKeyPressed(eh->{
+            System.out.println("OLAAAAAAAA");
+            if (eh.getCode().equals(KeyCode.ENTER)) {
+                scenapr.requestFocus();
+                ordenarPorBusqueda();
+            }
+        });
+            
+        mostrarTodo.setOnAction(eh-> mostrarTodo());
     }
     
     private void condicion(){
@@ -140,42 +166,66 @@ public class PaginaInicialController implements Initializable {
         PriorityQueue<Videojuego> colaVideojuego = new PriorityQueue<>((v1,v2)->{
             return v1.getFechaDeLanzamiento().compareTo(v2.getFechaDeLanzamiento());
         });
-        for(Videojuego v : this.videojuegos){
+        for (Videojuego v : this.videojuegos) {
             colaVideojuego.offer(v);
         }
-        while(!colaVideojuego.isEmpty()){
+        while (!colaVideojuego.isEmpty()) {
             tmp.addLast(colaVideojuego.remove());
         }
         panel.getChildren().clear();
         this.videojuegos = tmp;
         mostrarVideojuegos(this.videojuegos);
     }
-    
-    private void ordenarPorBusqueda(){
+
+    private void ordenarPorBusqueda() {
+
+        String año = txtAño.getText();
+        System.out.println(año);
+
         String palabra = buscarTitulo.getText();
         LCDE<Videojuego> tmp = new LCDE<>();
-        Queue<Videojuego> colaVideojuegos = new LinkedList<>();
-        for(Videojuego v : this.videojuegos){
+        Set<Videojuego> colaVideojuegos = new TreeSet<>((v1, v2) -> {
+            return v1.getTitulo().compareTo(v2.getTitulo());
+        });
+        for (Videojuego v : this.listaInicialVideojuegos) {
+
+            String[] fecha = v.getFechaDeLanzamiento().split("-");
+
             String tituloNormalizado = v.getTitulo().toLowerCase();
-           /* String palabraNormalizada = palabra.toLowerCase();
-            if(tituloNormalizado.contains(palabraNormalizada)){
-                colaVideojuegos.offer(v);
-            }*/
-            String[] juegoSeparado=v.getTitulo().toLowerCase().split(" ");
-            String palabraNormalizada1=palabra.toLowerCase();
-            for(String juegoSeparado1: juegoSeparado){
-                if(juegoSeparado1.startsWith(palabraNormalizada1) && tituloNormalizado.contains(juegoSeparado1)){
-                    colaVideojuegos.offer(v);}
-
-
+            String palabraNormalizada = palabra.toLowerCase();
+            String[] tituloSeparado = tituloNormalizado.split(" ");
+            for (String tituloPartes : tituloSeparado) {
+                if (año != "") {
+                    if ((tituloPartes.startsWith(palabraNormalizada) || tituloNormalizado.startsWith(palabraNormalizada)) && año.equals(fecha[0])) {
+                        colaVideojuegos.add(v);
+                    }
+                } else {
+                    if ((tituloPartes.startsWith(palabraNormalizada) || tituloNormalizado.startsWith(palabraNormalizada))) {
+                        colaVideojuegos.add(v);
+                    }
+                }
             }
         }
-        while(!colaVideojuegos.isEmpty()){
-            tmp.addLast(colaVideojuegos.remove());
+        Iterator<Videojuego> i = colaVideojuegos.iterator();
+
+        while (i.hasNext()) {
+            tmp.addLast(i.next());
         }
         panel.getChildren().clear();
         this.videojuegos = tmp;
         mostrarVideojuegos(this.videojuegos);
     }
-    
+
+    private void mostrarTodo() {
+        LCDE<Videojuego> tmp = new LCDE<>();
+        for (Videojuego v : this.listaInicialVideojuegos) {
+            tmp.addLast(v);
+        }
+        this.videojuegos = tmp;
+        panel.getChildren().clear();
+        mostrarVideojuegos(this.videojuegos);
+    }
+
+
+
 }
