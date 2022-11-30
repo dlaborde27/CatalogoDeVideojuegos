@@ -2,14 +2,15 @@ package grupo.modelo;
 public class Reseña  {
     private String comentario;
     private String Usuario;
-    private float valoracion;
-    public Videojuego juego;
+    private int valoracion;
+    private String fecha;
 
-    public Reseña(String comentario, String Usuario, float valoracion, Videojuego juego) {
+    public Reseña(String comentario, String Usuario, int valoracion, String  fecha) {
         this.comentario = comentario;
         this.Usuario = Usuario;
         this.valoracion = valoracion;
-        this.juego = juego;
+        this.fecha=fecha;
+
     }
 
     public String getComentario() {
@@ -28,22 +29,18 @@ public class Reseña  {
         this.Usuario = Usuario;
     }
 
-    public float getValoracion() {
+    public int getValoracion() {
         return valoracion;
     }
 
-    public void setValoracion(float valoracion) {
+    public void setValoracion(int valoracion) {
         this.valoracion = valoracion;
     }
 
-    public Videojuego getJuego() {
-        return juego;
+    public String getFecha() {
+        return fecha;
     }
 
-    public void setJuego(Videojuego juego) {
-        this.juego = juego;
-    }
-    
-          
+        
 }
 

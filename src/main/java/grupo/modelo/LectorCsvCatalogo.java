@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class LectorCsvCatalogo {
     public static LCDE<Videojuego> cargarListaVideojuegos(){
@@ -16,8 +17,19 @@ public class LectorCsvCatalogo {
                 String[] datos = linea.split("/");
                 String capturas= datos[6];
                 String[] arregloCapturas = capturas.substring(1,capturas.length()-1).split(",");
-                videojuegos.addLast(new Videojuego(datos[0],datos[1],datos[2],datos[3],datos[4],datos[5],agregarALista(arregloCapturas)));
+                
+                Videojuego vj=new Videojuego(datos[0],datos[1],datos[2],datos[3],datos[4],datos[5],agregarALista(arregloCapturas));
+                
+                
+                vj.addReviews(new Reseña("Muy bueno","JordanSP10",90, "2022-11-20"));
+                vj.addReviews(new Reseña("Decente","Licc17",70,"2022-11-21"));                
+                
+            
+                videojuegos.addLast(vj);
+               
+     
             }
+        
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -27,6 +39,7 @@ public class LectorCsvCatalogo {
     public static LCDE<String> agregarALista(String[] arreglo){
         LCDE<String> lista = new LCDE<>();
         for (String s: arreglo){
+            
             lista.addLast(s);
         }
         return lista;

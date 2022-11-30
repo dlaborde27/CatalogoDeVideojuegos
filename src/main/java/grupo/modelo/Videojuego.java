@@ -9,7 +9,7 @@ public class Videojuego {
     private String fechaDeLanzamiento;
     private String portada;
     private LCDE<String> capturasDePantalla;
-    private LCDE<Reseña> reviews; 
+    public LCDE<Reseña> reviews=new LCDE<>(); 
 
 
     public Videojuego(String titulo, String descripcion, String genero, String desarrolladora, String fechaDeLanzamiento, String portada, LCDE<String> capturasDePantalla) {
@@ -20,6 +20,7 @@ public class Videojuego {
         this.fechaDeLanzamiento = fechaDeLanzamiento;
         this.portada = portada;
         this.capturasDePantalla = capturasDePantalla;
+
     }
 
     public String getTitulo() {
@@ -53,8 +54,12 @@ public class Videojuego {
     public String toString(){
         return titulo;
     }
+    
+    public LCDE<Reseña> getReviews(){
+        return reviews;
+    }   
     public  void addReviews(Reseña r){
-        reviews.addFirst(r);
+        reviews.addLast(r);
     }
     
 }

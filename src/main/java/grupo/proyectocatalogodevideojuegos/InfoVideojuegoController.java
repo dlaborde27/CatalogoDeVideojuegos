@@ -22,12 +22,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import grupo.modelo.*;
 
-/**
- * FXML Controller class
- *
- * @author Pc
- */
 public class InfoVideojuegoController implements Initializable {
 
     @FXML
@@ -45,8 +42,11 @@ public class InfoVideojuegoController implements Initializable {
     private Button atras;
     @FXML
     private TilePane panelCapturas;
+    @FXML
+    private VBox reviewsVbox;
+
     
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
@@ -59,8 +59,9 @@ public class InfoVideojuegoController implements Initializable {
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         }
-        
         mostrarVideojuegos(videojuego.getCapturasDePantalla());
+        ///Reviews(videojuego.getReviews());
+
         
         atras.setOnMouseClicked(event -> {
                 try {
@@ -71,18 +72,54 @@ public class InfoVideojuegoController implements Initializable {
             });
         
     }
-    
+       private void Reviews(LCDE<Reseña> rese){
+
+        for(Reseña r: rese){
+ 
+            reviewsVbox.getChildren().addAll(ReviewIndividual(r));
+            }
+        
+}
+       
+       
+        private VBox ReviewIndividual(Reseña r){
+        VBox VboxR=new VBox();
+        
+        HBox nombre_fecha=new HBox();
+        
+        Label nombreUsuario=new Label();
+        nombreUsuario.setText("Usuario: "+r.getUsuario());
+        Label fechaR=new Label();
+        fechaR.setText("Publicado el: "+r.getFecha()); 
+        
+        nombre_fecha.getChildren().addAll(nombreUsuario,fechaR);
+        
+        Label valoracion=new Label();
+        valoracion.setText("Valoracion: "+r.getValoracion()+"/100");
+        
+        Label comentario=new Label();
+        comentario.setText(r.getComentario());
+        
+        VboxR.getChildren().addAll(nombre_fecha,valoracion,comentario);
+        
+        return VboxR;
+              
+        
+        
+        
+    }
     private void mostrarVideojuegos(LCDE<String> caps){
         for (String c : caps) {
             VBox boxCaptura = crearElementosVideojuego(c);
             panelCapturas.getChildren().addAll(boxCaptura);
+            panelCapturas.setMaxWidth(2000);
+            panelCapturas.setMaxHeight(3000);
         }
     }
 
     private VBox crearElementosVideojuego(String c) {
         VBox vbox = new VBox();
   
- 
         try {
             Image image = new Image(new FileInputStream("src\\main\\resources\\grupo\\ListaVideojuegos\\imagenes\\Screenshot\\" + c), 1920, 1080, true, false);
             ImageView imageView = new ImageView(image);
@@ -96,5 +133,7 @@ public class InfoVideojuegoController implements Initializable {
         return vbox;
     }
     
+
+
     
 }
