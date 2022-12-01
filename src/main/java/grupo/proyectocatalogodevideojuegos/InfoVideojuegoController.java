@@ -22,12 +22,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import grupo.modelo.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
-/**
- * FXML Controller class
- *
- * @author Pc
- */
 public class InfoVideojuegoController implements Initializable {
 
     @FXML
@@ -45,8 +44,11 @@ public class InfoVideojuegoController implements Initializable {
     private Button atras;
     @FXML
     private TilePane panelCapturas;
+    @FXML
+    private VBox vboxReview;
+
     
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
@@ -59,8 +61,9 @@ public class InfoVideojuegoController implements Initializable {
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         }
-        
         mostrarVideojuegos(videojuego.getCapturasDePantalla());
+        Reviews(videojuego.getReviews());
+
         
         atras.setOnMouseClicked(event -> {
                 try {
@@ -71,18 +74,60 @@ public class InfoVideojuegoController implements Initializable {
             });
         
     }
-    
+       private void Reviews(LCDE<Review> rese){
+        vboxReview.getChildren().clear();
+        for(Review r: rese){
+            vboxReview.getChildren().addAll(ReviewIndividual(r));
+        }
+        
+}
+       
+       
+        private VBox ReviewIndividual(Review r){
+        VBox VboxR=new VBox();
+        
+        HBox nombre_fecha=new HBox();
+        
+        Label nombreUsuario=new Label();
+        nombreUsuario.setText("Usuario: "+r.getUsuario());
+        nombreUsuario.setTextFill(Color.web("#F5F5F5"));
+        nombreUsuario.setFont(Font.font("SansSerif", 13));
+        nombreUsuario.setMaxWidth(150);
+        Label fechaR=new Label();
+        fechaR.setText("Usuario: "+r.getUsuario());
+        fechaR.setTextFill(Color.web("#F5F5F5"));
+        fechaR.setFont(Font.font("SansSerif", 13));
+        fechaR.setMaxWidth(150);
+        fechaR.setText("Publicado el: "+r.getFecha()); 
+        
+        nombre_fecha.getChildren().addAll(nombreUsuario,fechaR);
+        
+        Label valoracion=new Label();
+        valoracion.setText("Valoracion: "+r.getValoracion()+"/100");
+        
+        Label comentario=new Label();
+        comentario.setText(r.getComentario());
+        
+        VboxR.getChildren().addAll(nombre_fecha,valoracion,comentario);
+        
+        return VboxR;
+              
+        
+        
+        
+    }
     private void mostrarVideojuegos(LCDE<String> caps){
         for (String c : caps) {
             VBox boxCaptura = crearElementosVideojuego(c);
             panelCapturas.getChildren().addAll(boxCaptura);
+            panelCapturas.setMaxWidth(2000);
+            panelCapturas.setMaxHeight(3000);
         }
     }
 
     private VBox crearElementosVideojuego(String c) {
         VBox vbox = new VBox();
   
- 
         try {
             Image image = new Image(new FileInputStream("src\\main\\resources\\grupo\\ListaVideojuegos\\imagenes\\Screenshot\\" + c), 1920, 1080, true, false);
             ImageView imageView = new ImageView(image);
@@ -93,8 +138,14 @@ public class InfoVideojuegoController implements Initializable {
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         }
+        vbox.setSpacing(20);
+
+        
+  
         return vbox;
     }
     
+
+
     
 }
