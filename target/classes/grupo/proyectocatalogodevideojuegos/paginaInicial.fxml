@@ -10,7 +10,11 @@
    <children>
       <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="36.0" prefWidth="739.0">
          <children>
+<<<<<<< Updated upstream
             <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="266.0" style="-fx-background-color: rgb(91, 91, 91); -fx-min-width: 230; -fx-pref-height: 40; -fx-background-radius: 24;">
+=======
+            <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="310.0" style="-fx-background-color: rgb(91, 91, 91); -fx-alignment: center-left; -fx-min-width: 230; -fx-pref-height: 40; -fx-background-radius: 24;">
+>>>>>>> Stashed changes
                <children>
                   <ImageView fx:id="imgLupa" fitHeight="20.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                      <HBox.margin>
@@ -44,6 +48,7 @@
                   <Insets />
                </HBox.margin>
             </HBox>
+<<<<<<< Updated upstream
             <ImageView fitHeight="25.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../carrito.png" />
@@ -63,6 +68,9 @@
                </font>
             </Button>
             <Button fx:id="mostrarTodo" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="29.0" prefWidth="99.0" style="-fx-background-radius: 8000; -fx-background-color: rgb(91, 91, 91);" text="MostrarTodo">
+=======
+            <Button fx:id="mostrarTodo" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="29.0" prefWidth="31.0" style="-fx-background-radius: 8000; -fx-alignment: center-rigth; -fx-background-color: rgb(192, 192, 192);" text="&lt;">
+>>>>>>> Stashed changes
                <HBox.margin>
                   <Insets />
                </HBox.margin>
