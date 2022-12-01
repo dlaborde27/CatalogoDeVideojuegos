@@ -63,6 +63,8 @@ public class PaginaInicialController implements Initializable {
         this.listaInicialVideojuegos = LectorCsvCatalogo.cargarListaVideojuegos();
         for(Videojuego v:videojuegos){
             System.out.println(v.getTitulo() + "    "+ v.getFechaDeLanzamiento());
+            v.imprimirReviews();
+            
         }
         mostrarVideojuegos(videojuegos);
         setActions();

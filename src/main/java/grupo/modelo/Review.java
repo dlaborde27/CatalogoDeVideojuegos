@@ -1,11 +1,12 @@
 package grupo.modelo;
-public class Reseña  {
+
+public class Review {
     private String comentario;
     private String Usuario;
     private int valoracion;
     private String fecha;
 
-    public Reseña(String comentario, String Usuario, int valoracion, String  fecha) {
+    public Review(String comentario, String Usuario, int valoracion, String  fecha) {
         this.comentario = comentario;
         this.Usuario = Usuario;
         this.valoracion = valoracion;
@@ -41,6 +42,12 @@ public class Reseña  {
         return fecha;
     }
 
-        
-}
+    @Override
+    public String toString() {
+        return "Review{" + "comentario=" + comentario + ", Usuario=" + Usuario + ", valoracion=" + valoracion + ", fecha=" + fecha + '}';
+    }
 
+
+
+            
+}

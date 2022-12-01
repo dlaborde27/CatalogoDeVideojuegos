@@ -60,7 +60,7 @@ public class InfoVideojuegoController implements Initializable {
             ex.printStackTrace();
         }
         mostrarVideojuegos(videojuego.getCapturasDePantalla());
-        ///Reviews(videojuego.getReviews());
+        //Reviews(videojuego.getReviews());
 
         
         atras.setOnMouseClicked(event -> {
@@ -72,17 +72,16 @@ public class InfoVideojuegoController implements Initializable {
             });
         
     }
-       private void Reviews(LCDE<Reseña> rese){
-
-        for(Reseña r: rese){
- 
+       private void Reviews(LCDE<Review> rese){
+        reviewsVbox.getChildren().clear();
+        for(Review r: rese){
             reviewsVbox.getChildren().addAll(ReviewIndividual(r));
             }
         
 }
        
        
-        private VBox ReviewIndividual(Reseña r){
+        private VBox ReviewIndividual(Review r){
         VBox VboxR=new VBox();
         
         HBox nombre_fecha=new HBox();
@@ -130,6 +129,10 @@ public class InfoVideojuegoController implements Initializable {
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         }
+        vbox.setSpacing(20);
+
+        
+  
         return vbox;
     }
     
