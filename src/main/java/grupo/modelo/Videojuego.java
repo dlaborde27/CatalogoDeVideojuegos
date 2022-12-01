@@ -9,7 +9,7 @@ public class Videojuego {
     private String fechaDeLanzamiento;
     private String portada;
     private LCDE<String> capturasDePantalla;
-    public LCDE<Review> reviews=new LCDE(); 
+    public LCDE<Review> reviews = new LCDE<>(); 
 
 
     public Videojuego(String titulo, String descripcion, String genero, String desarrolladora, String fechaDeLanzamiento, String portada, LCDE<String> capturasDePantalla) {
@@ -58,6 +58,7 @@ public class Videojuego {
     public LCDE<Review> getReviews(){
         return reviews;
     }   
+    
     public  void addReviews(Review r){
         reviews.addLast(r);
     }

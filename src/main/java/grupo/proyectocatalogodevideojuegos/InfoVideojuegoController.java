@@ -24,6 +24,8 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.*;
 import grupo.modelo.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 public class InfoVideojuegoController implements Initializable {
 
@@ -43,7 +45,7 @@ public class InfoVideojuegoController implements Initializable {
     @FXML
     private TilePane panelCapturas;
     @FXML
-    private VBox reviewsVbox;
+    private VBox vboxReview;
 
     
 
@@ -60,7 +62,7 @@ public class InfoVideojuegoController implements Initializable {
             ex.printStackTrace();
         }
         mostrarVideojuegos(videojuego.getCapturasDePantalla());
-        //Reviews(videojuego.getReviews());
+        Reviews(videojuego.getReviews());
 
         
         atras.setOnMouseClicked(event -> {
@@ -73,10 +75,10 @@ public class InfoVideojuegoController implements Initializable {
         
     }
        private void Reviews(LCDE<Review> rese){
-        reviewsVbox.getChildren().clear();
+        vboxReview.getChildren().clear();
         for(Review r: rese){
-            reviewsVbox.getChildren().addAll(ReviewIndividual(r));
-            }
+            vboxReview.getChildren().addAll(ReviewIndividual(r));
+        }
         
 }
        
@@ -88,7 +90,14 @@ public class InfoVideojuegoController implements Initializable {
         
         Label nombreUsuario=new Label();
         nombreUsuario.setText("Usuario: "+r.getUsuario());
+        nombreUsuario.setTextFill(Color.web("#F5F5F5"));
+        nombreUsuario.setFont(Font.font("SansSerif", 13));
+        nombreUsuario.setMaxWidth(150);
         Label fechaR=new Label();
+        fechaR.setText("Usuario: "+r.getUsuario());
+        fechaR.setTextFill(Color.web("#F5F5F5"));
+        fechaR.setFont(Font.font("SansSerif", 13));
+        fechaR.setMaxWidth(150);
         fechaR.setText("Publicado el: "+r.getFecha()); 
         
         nombre_fecha.getChildren().addAll(nombreUsuario,fechaR);

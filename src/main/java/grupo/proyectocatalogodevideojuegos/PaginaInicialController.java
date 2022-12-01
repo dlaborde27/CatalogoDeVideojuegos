@@ -38,13 +38,9 @@ public class PaginaInicialController implements Initializable {
     private TilePane panel;
     public static Videojuego ultimoVideojuegoElegido;
     @FXML
-    private RadioButton botonTitulo;
-    @FXML
-    private RadioButton botonFecha;
-    @FXML
     private TextField buscarTitulo;
-    @FXML
-    private Button btnBuscar;
+    /*@FXML
+    private Button btnBuscar;*/
     LCDE<Videojuego> videojuegos;
     LCDE<Videojuego> listaInicialVideojuegos;
     @FXML
@@ -53,12 +49,13 @@ public class PaginaInicialController implements Initializable {
     private Button mostrarTodo;
     @FXML
     private VBox scenapr;
+    @FXML
+    private ImageView imgLupa;
 
     
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        buscarTitulo.setStyle("-fx-background-radius: 50px");
         this.videojuegos = LectorCsvCatalogo.cargarListaVideojuegos();
         this.listaInicialVideojuegos = LectorCsvCatalogo.cargarListaVideojuegos();
         for(Videojuego v:videojuegos){
@@ -66,6 +63,7 @@ public class PaginaInicialController implements Initializable {
             v.imprimirReviews();
             
         }
+        ordenarPorTitulo();
         mostrarVideojuegos(videojuegos);
         setActions();
     }    
@@ -78,7 +76,6 @@ public class PaginaInicialController implements Initializable {
     }
     
     private VBox crearElementosVideojuego(Videojuego videojuego){
-        //System.out.println("Adding: " + videojuego.getTitulo()+"    "+ videojuego.getFechaDeLanzamiento());
         VBox vbox = new VBox();
         try{
             Image image = new Image(new FileInputStream("src\\main\\resources\\grupo\\ListaVideojuegos\\imagenes\\Portada\\" + videojuego.getPortada()), 1280, 720, true, false);
@@ -101,51 +98,30 @@ public class PaginaInicialController implements Initializable {
             fecha.setMaxWidth(150);
             vbox.getChildren().add(fecha);
             
+            imageView.setOnMouseClicked(event -> cambioAInfoVideojuego(videojuego));
             
-            imageView.setOnMouseClicked(event -> {
-                try {
-                    ultimoVideojuegoElegido = videojuego;
-                    App.setRoot("infoVideojuego");
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-            });
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
         return vbox;
     }
     
     private void setActions() {
-        botonTitulo.setOnAction(eh -> condicion());
-        botonFecha.setOnAction(eh -> condicion());
-        btnBuscar.setOnAction(eh-> ordenarPorBusqueda());
-        scenapr.setOnKeyPressed(eh->{
-            System.out.println("OLAAAAAAAA");
+        imgLupa.setOnMouseClicked(eh -> {
+            scenapr.requestFocus();
+            ordenarPorBusqueda();
+        });
+        scenapr.setOnKeyPressed(eh -> {
             if (eh.getCode().equals(KeyCode.ENTER)) {
                 scenapr.requestFocus();
                 ordenarPorBusqueda();
             }
         });
-            
+
         mostrarTodo.setOnAction(eh-> mostrarTodo());
     }
     
-    private void condicion(){
-        if(botonTitulo.isSelected() && botonFecha.isSelected()){
-            ordenarPorTitulo();
-            ordenarPorfecha();
-                
-        }else if(botonTitulo.isSelected()){
-                ordenarPorTitulo();
-        }else if(botonFecha.isSelected()){
-                ordenarPorfecha();
-                
-        }else{
-            panel.getChildren().clear();
-            mostrarVideojuegos(this.listaInicialVideojuegos);
-        }
-    }
     
     private void ordenarPorTitulo(){
         LCDE<Videojuego> tmp = new LCDE<>();
@@ -213,6 +189,8 @@ public class PaginaInicialController implements Initializable {
         while (i.hasNext()) {
             tmp.addLast(i.next());
         }
+        buscarTitulo.clear();
+        txtAño.clear();
         panel.getChildren().clear();
         this.videojuegos = tmp;
         mostrarVideojuegos(this.videojuegos);
@@ -225,9 +203,21 @@ public class PaginaInicialController implements Initializable {
         }
         this.videojuegos = tmp;
         panel.getChildren().clear();
+        ordenarPorTitulo();
         mostrarVideojuegos(this.videojuegos);
     }
-
-
-
+    
+    private void cambioAInfoVideojuego(Videojuego videojuego) {
+        try {
+            ultimoVideojuegoElegido = videojuego;
+            App.setRoot("infoVideojuego");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
 }
+
+
+
+

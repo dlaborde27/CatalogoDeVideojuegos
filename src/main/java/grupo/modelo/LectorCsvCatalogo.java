@@ -21,7 +21,7 @@ public class LectorCsvCatalogo {
                 Videojuego vj=new Videojuego(datos[0],datos[1],datos[2],datos[3],datos[4],datos[5],agregarALista(arregloCapturas));
                 
                 
-                vj.addReviews(new Review("Muy bueno","JordanSP10",90, "2022-11-20"));
+                vj.addReviews(new Review("Muy bueno","JordanSP10",90,"2022-11-20"));
                 vj.addReviews(new Review("Decente","Licc17",70,"2022-11-21"));                
                 
             
