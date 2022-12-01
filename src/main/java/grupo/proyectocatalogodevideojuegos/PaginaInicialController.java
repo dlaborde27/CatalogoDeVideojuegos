@@ -51,6 +51,9 @@ public class PaginaInicialController implements Initializable {
     private VBox scenapr;
     @FXML
     private ImageView imgLupa;
+    @FXML
+    private Button bwish;
+
 
     
     
@@ -78,10 +81,12 @@ public class PaginaInicialController implements Initializable {
     private VBox crearElementosVideojuego(Videojuego videojuego){
         VBox vbox = new VBox();
         try{
+
             Image image = new Image(new FileInputStream("src\\main\\resources\\grupo\\ListaVideojuegos\\imagenes\\Portada\\" + videojuego.getPortada()), 1280, 720, true, false);
             ImageView imageView = new ImageView(image);
             imageView.setFitWidth(200);
             imageView.setFitHeight(300);
+
             vbox.getChildren().add(imageView);
             Label titleLabel = new Label(videojuego.getTitulo());
             titleLabel.setPadding(new Insets(8, 0, 0, 0));
@@ -89,16 +94,20 @@ public class PaginaInicialController implements Initializable {
             titleLabel.setFont(Font.font("SansSerif", 13));
             titleLabel.setMaxWidth(150);
             vbox.getChildren().add(titleLabel);
-            
-            
+
+            Button botonWish= new Button("Agregar a WishList");
             Label fecha = new Label(videojuego.getFechaDeLanzamiento());
             fecha.setPadding(new Insets(8, 0, 0, 0));
             fecha.setTextFill(Color.web("#F5F5F5"));
             fecha.setFont(Font.font("SansSerif", 13));
             fecha.setMaxWidth(150);
+
             vbox.getChildren().add(fecha);
+            vbox.getChildren().add(botonWish);
+
             
             imageView.setOnMouseClicked(event -> cambioAInfoVideojuego(videojuego));
+            botonWish.setOnAction(eh->agregarAwishList());
             
         } catch (IOException e) {
             e.printStackTrace();
@@ -120,6 +129,14 @@ public class PaginaInicialController implements Initializable {
         });
 
         mostrarTodo.setOnAction(eh-> mostrarTodo());
+        bwish.setOnAction(eh->cambioAwishList());
+
+
+
+
+
+
+
     }
     
     
@@ -214,6 +231,25 @@ public class PaginaInicialController implements Initializable {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+   private void cambioAwishList()  {
+       try {
+
+
+           App.setRoot("wishList");
+
+       } catch (IOException ex) {
+           ex.printStackTrace();
+       }
+    }
+    public void agregarAwishList(){
+        LCDE<Videojuego> listaRetorno=new LCDE<>();
+        Videojuego juego=ultimoVideojuegoElegido;
+        listaRetorno.addLast(juego);
+
+        System.out.println(juego);
+
+
     }
     
 }

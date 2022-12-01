@@ -27,6 +27,7 @@ import grupo.modelo.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
+
 public class InfoVideojuegoController implements Initializable {
 
     @FXML
@@ -37,7 +38,7 @@ public class InfoVideojuegoController implements Initializable {
     private Label genero;
     @FXML
     private Label descripcion;
-    Videojuego videojuego = PaginaInicialController.ultimoVideojuegoElegido;
+    Videojuego videojuegoe = PaginaInicialController.ultimoVideojuegoElegido;
     @FXML
     private ImageView portada;
     @FXML
@@ -47,22 +48,27 @@ public class InfoVideojuegoController implements Initializable {
     @FXML
     private VBox vboxReview;
 
+
     
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
-            titulo.setText(videojuego.getTitulo());
-            descripcion.setText(videojuego.getDescripcion());
-            genero.setText(videojuego.getGeneros());
-            portada.setImage(new Image(new FileInputStream("src\\main\\resources\\grupo\\ListaVideojuegos\\imagenes\\Portada\\" + videojuego.getPortada()), 1280, 720, true, false));
+            titulo.setText(videojuegoe.getTitulo());
+            descripcion.setText(videojuegoe.getDescripcion());
+            genero.setText(videojuegoe.getGeneros());
+            portada.setImage(new Image(new FileInputStream("src\\main\\resources\\grupo\\ListaVideojuegos\\imagenes\\Portada\\" + videojuegoe.getPortada()), 1280, 720, true, false));
             portada.setFitWidth(200);
             portada.setFitHeight(300);
+
+
+
+
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         }
-        mostrarVideojuegos(videojuego.getCapturasDePantalla());
-        Reviews(videojuego.getReviews());
+        mostrarVideojuegos(videojuegoe.getCapturasDePantalla());
+        Reviews(videojuegoe.getReviews());
 
         
         atras.setOnMouseClicked(event -> {
@@ -72,6 +78,7 @@ public class InfoVideojuegoController implements Initializable {
                     ex.printStackTrace();
                 }
             });
+
         
     }
        private void Reviews(LCDE<Review> rese){
@@ -144,6 +151,7 @@ public class InfoVideojuegoController implements Initializable {
   
         return vbox;
     }
+
     
 
 
